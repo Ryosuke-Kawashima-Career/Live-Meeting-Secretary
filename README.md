@@ -33,18 +33,33 @@ Utilizing the **Google Agent Development Kit (ADK)** and the native-audio **Gemi
 
 Ensure you have Python 3.10 or higher installed.
 
-### 2. Clone and Install Dependencies
+### 2. Create Virtual Environment & Install Dependencies
 
-Navigate to the project root and install the dependencies defined in `pyproject.toml`:
+We recommend using [uv](https://github.com/astral-sh/uv) for fast, reliable package resolution:
 
+1. **Create the virtual environment**:
+   ```bash
+   uv venv
+   ```
+2. **Activate the virtual environment**:
+   * On Windows (PowerShell):
+     ```powershell
+     .venv\Scripts\activate
+     ```
+   * On macOS/Linux:
+     ```bash
+     source .venv/bin/activate
+     ```
+3. **Install the package and dependencies in editable mode**:
+   ```bash
+   uv pip install -e .
+   ```
+
+*(Alternatively, if using standard python `venv` and `pip`)*:
 ```bash
+python -m venv .venv
+# Activate the environment, then run:
 pip install -e .
-```
-
-*(Alternatively, if using Hatch or a virtual environment, install directly with pip)*:
-
-```bash
-pip install google-adk>=1.26.0 fastapi uvicorn websockets python-dotenv
 ```
 
 ### 3. Environment Configuration
