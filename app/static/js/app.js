@@ -23,6 +23,9 @@ let activeSubtitleElement = null;
 let activeInputText = "";
 let activeOutputText = "";
 let isBilingual = false;
+let isWaitingForChatResponse = false;
+let isReconnectingForConfig = false;
+let reconnectTimer = null;
 
 // DOM Elements
 const selectFrom = document.getElementById("selectFrom");
@@ -103,6 +106,11 @@ function connectWebsocket() {
     updateConnectionStatus("disconnected", "Disconnected");
     console.log("WebSocket disconnected.");
     stopVisualizer();
+    
+    if (!isReconnectingForConfig) {
+      console.log("WebSocket connection closed. Reconnecting in 5 seconds...");
+      reconnectTimer = setTimeout(connectWebsocket, 5000);
+    }
   };
 
   websocket.onerror = (error) => {
@@ -156,7 +164,12 @@ function sendConfigParameters() {
 
 // Reconnect WS on configuration adjustments
 function handleConfigChange() {
+  isReconnectingForConfig = true;
+  if (reconnectTimer) {
+    clearTimeout(reconnectTimer);
+  }
   connectWebsocket();
+  isReconnectingForConfig = false;
 }
 
 selectFrom.addEventListener("change", handleConfigChange);
@@ -185,6 +198,7 @@ function handleAdkEvent(event) {
     finalizeActiveSubtitle();
     finalizeActiveChatBubble(true);
     stopVisualizer();
+    isWaitingForChatResponse = false;
     return;
   }
 
@@ -193,6 +207,7 @@ function handleAdkEvent(event) {
     finalizeActiveSubtitle();
     finalizeActiveChatBubble();
     stopVisualizer();
+    isWaitingForChatResponse = false;
     return;
   }
 
@@ -205,8 +220,15 @@ function handleAdkEvent(event) {
 
   // 4. Model translated speech response (Target text)
   if (event.outputTranscription && event.outputTranscription.text) {
-    activeOutputText = event.outputTranscription.text;
-    renderSubtitles();
+    const text = event.outputTranscription.text;
+    const finished = event.outputTranscription.finished;
+    
+    if (isWaitingForChatResponse) {
+      handleIncomingChatText(text, finished);
+    } else {
+      activeOutputText = text;
+      renderSubtitles();
+    }
   }
 
   // 5. Written text chunks (AI Copilot chat responses)
@@ -361,6 +383,7 @@ messageForm.addEventListener("submit", (e) => {
 
   // Stream text over WS
   if (websocket && websocket.readyState === WebSocket.OPEN) {
+    isWaitingForChatResponse = true;
     websocket.send(JSON.stringify({
       type: "text",
       text: text
@@ -390,7 +413,7 @@ function appendChatBubble(text, sender) {
   scrollToBottom(messagesDiv);
 }
 
-function handleIncomingChatText(textChunk) {
+function handleIncomingChatText(textChunk, finished) {
   if (!currentChatBubbleElement) {
     // Create new agent bubble wrapper
     currentChatBubbleElement = document.createElement("div");
@@ -422,9 +445,17 @@ function handleIncomingChatText(textChunk) {
     messagesDiv.appendChild(currentChatBubbleElement);
   }
 
-  currentChatTextAccumulator += textChunk;
   const txtElement = currentChatBubbleElement.querySelector(".bubble-text");
-  txtElement.textContent = currentChatTextAccumulator;
+  
+  if (finished) {
+    // Final transcription contains the complete text, replace entirely
+    txtElement.textContent = textChunk;
+    finalizeActiveChatBubble();
+  } else {
+    // Partial transcription - append to existing text
+    currentChatTextAccumulator += textChunk;
+    txtElement.textContent = currentChatTextAccumulator;
+  }
   scrollToBottom(messagesDiv);
 }
 

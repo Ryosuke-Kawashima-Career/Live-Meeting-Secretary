@@ -1,0 +1,14 @@
+{
+  "session_id": "test-session",
+  "user_id": "test-user",
+  "from_lang": "auto",
+  "to_lang": "ja",
+  "timestamp": "2026-06-29T17:02:33.230503",
+  "transcript": [
+    {
+      "speaker": "user-chat",
+      "text": "Please summarize the rules of soccer in one sentence.",
+      "timestamp": "2026-06-29T17:02:33.225351"
+    }
+  ]
+}
