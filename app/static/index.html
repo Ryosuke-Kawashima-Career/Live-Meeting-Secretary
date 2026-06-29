@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Translation AI - Meeting Secretary</title>
+    <!-- Google Fonts Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="/static/js/app.js" type="module"></script>
+  </head>
+
+  <body>
+    <header class="glass-header">
+      <div class="header-left">
+        <h1 id="appTitle" class="gradient-title">Live Translation AI</h1>
+        <div class="header-options">
+          <label class="toggle-switch" title="Proactive assistant interaction">
+            <input type="checkbox" id="enableProactivity">
+            <span class="slider"></span>
+            <span class="label-text">Proactivity</span>
+          </label>
+          <label class="toggle-switch" title="Detect emotional dialogue context">
+            <input type="checkbox" id="enableAffectiveDialog">
+            <span class="slider"></span>
+            <span class="label-text">Affective Dialog</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Language Configurator Selectors -->
+        <div class="language-configurator">
+          <div class="select-group">
+            <label for="selectFrom">From:</label>
+            <select id="selectFrom" class="glass-select">
+              <option value="auto" selected>Auto-Detect</option>
+              <option value="en">English (EN)</option>
+              <option value="ja">Japanese (JA)</option>
+            </select>
+          </div>
+          <div class="select-group">
+            <label for="selectTo">To:</label>
+            <select id="selectTo" class="glass-select">
+              <option value="ja" selected>Japanese (JA)</option>
+              <option value="en">English (EN)</option>
+            </select>
+          </div>
+          <label class="bilingual-toggle" title="Display original and translation stacked">
+            <input type="checkbox" id="enableBilingualMode">
+            <span>Bilingual Mode</span>
+          </label>
+        </div>
+
+        <div class="connection-status" id="connectionStatusBox">
+          <span class="status-indicator disconnected" id="statusIndicator"></span>
+          <span id="statusText">Disconnected</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-layout">
+      <!-- Subtitle Viewport (Center-Left) -->
+      <section class="subtitle-viewport glass-panel" id="subtitlePanel">
+        <div class="panel-header">
+          <h2>Live Subtitles</h2>
+          <span class="subtitle-badge" id="subtitleLanguageBadge">Bilingual</span>
+        </div>
+        <div class="subtitle-content" id="subtitlesWrapper">
+          <div class="subtitle-placeholder" id="subtitlePlaceholder">
+            Connect and speak to display real-time simultaneous translations...
+          </div>
+        </div>
+        <!-- Vocal Waveform Visualizer -->
+        <div class="waveform-container" id="waveformContainer">
+          <svg class="waveform-svg" viewBox="0 0 100 40" preserveAspectRatio="none">
+            <g fill="currentColor" class="waveform-bars" id="waveformBars">
+              <rect class="waveform-bar" x="5" y="18" width="2" height="4" rx="1"></rect>
+              <rect class="waveform-bar" x="10" y="15" width="2" height="10" rx="1"></rect>
+              <rect class="waveform-bar" x="15" y="12" width="2" height="16" rx="1"></rect>
+              <rect class="waveform-bar" x="20" y="8" width="2" height="24" rx="1"></rect>
+              <rect class="waveform-bar" x="25" y="15" width="2" height="10" rx="1"></rect>
+              <rect class="waveform-bar" x="30" y="18" width="2" height="4" rx="1"></rect>
+              <rect class="waveform-bar" x="35" y="12" width="2" height="16" rx="1"></rect>
+              <rect class="waveform-bar" x="40" y="6" width="2" height="28" rx="1"></rect>
+              <rect class="waveform-bar" x="45" y="10" width="2" height="20" rx="1"></rect>
+              <rect class="waveform-bar" x="50" y="14" width="2" height="12" rx="1"></rect>
+              <rect class="waveform-bar" x="55" y="10" width="2" height="20" rx="1"></rect>
+              <rect class="waveform-bar" x="60" y="6" width="2" height="28" rx="1"></rect>
+              <rect class="waveform-bar" x="65" y="12" width="2" height="16" rx="1"></rect>
+              <rect class="waveform-bar" x="70" y="18" width="2" height="4" rx="1"></rect>
+              <rect class="waveform-bar" x="75" y="15" width="2" height="10" rx="1"></rect>
+              <rect class="waveform-bar" x="80" y="8" width="2" height="24" rx="1"></rect>
+              <rect class="waveform-bar" x="85" y="12" width="2" height="16" rx="1"></rect>
+              <rect class="waveform-bar" x="90" y="15" width="2" height="10" rx="1"></rect>
+              <rect class="waveform-bar" x="95" y="18" width="2" height="4" rx="1"></rect>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <!-- AI Copilot Sidebar (Right Pane) -->
+      <section class="console-panel glass-panel" id="sidebarPanel">
+        <div class="console-header">
+          <h2>Interactive AI Copilot</h2>
+          <div class="console-controls">
+            <button id="clearConsole" class="btn-clear" title="Clear log">Clear</button>
+          </div>
+        </div>
+
+        <!-- Preset Quick Action Chips -->
+        <div class="preset-chips">
+          <button class="chip" data-prompt="Summarize the last 5 minutes of our meeting.">📝 Summarize 5m</button>
+          <button class="chip" data-prompt="List all agreed action items and decisions.">⚡ Action Items</button>
+          <button class="chip" data-prompt="Explain any technical terms or abbreviations discussed.">💡 Define Terms</button>
+        </div>
+
+        <!-- Chat logs -->
+        <div id="messages" class="console-content"></div>
+
+        <!-- Chat Input Field -->
+        <div class="input-container">
+          <form id="messageForm">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="message"
+                name="message"
+                placeholder="Ask AI Copilot about the meeting..."
+                autocomplete="off"
+              />
+              <button type="submit" id="sendButton" class="btn-send" disabled>Send</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Floating Dock (Footer Bottom Panel) -->
+    <footer class="floating-dock glass-panel">
+      <button type="button" id="startAudioButton" class="dock-btn mic-btn" title="Enable Voice Mode">
+        <span class="icon">🎤</span>
+        <span class="btn-text">Start Audio</span>
+      </button>
+      <button type="button" id="cameraButton" class="dock-btn secondary-btn" title="Send Camera Visual Context">
+        <span class="icon">📷</span>
+        <span>Visual Context</span>
+      </button>
+      <button type="button" id="exportButton" class="dock-btn secondary-btn" title="Download Meeting Minutes">
+        <span class="icon">💾</span>
+        <span>Export Minutes</span>
+      </button>
+    </footer>
+
+    <!-- Camera Preview Modal -->
+    <div id="cameraModal" class="modal">
+      <div class="modal-content glass-panel">
+        <div class="modal-header">
+          <h3>Share Slide Context</h3>
+          <button id="closeCameraModal" class="close-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <video id="cameraPreview" autoplay playsinline></video>
+        </div>
+        <div class="modal-footer">
+          <button id="cancelCamera" class="btn-secondary">Cancel</button>
+          <button id="captureImage" class="btn-primary">📷 Capture & Send</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
