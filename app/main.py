@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import List, Dict, Any
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Query
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Query, Response
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from google.adk.agents.live_request_queue import LiveRequestQueue
@@ -43,6 +43,10 @@ EXPORTS_DIR.mkdir(parents=True, exist_ok=True)
 @app.get("/")
 async def root():
     return FileResponse(static_dir / "index.html")
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return Response(status_code=204)
 
 @app.get("/exports/{session_id}")
 async def get_session_export(session_id: str):
