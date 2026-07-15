@@ -3,6 +3,16 @@
 from google.adk.agents import Agent
 from google.adk.tools import google_search
 
+LANGUAGES = {
+    "en": "English",
+    "ja": "Japanese",
+    "hi": "Hindi",
+    "bn": "Bengali",
+    "mr": "Marathi",
+    "te": "Telugu",
+    "ta": "Tamil",
+}
+
 def get_agent_instruction(from_lang: str, to_lang: str) -> str:
     """Generate dynamic instructions for the agent based on selected languages."""
     
@@ -15,25 +25,18 @@ def get_agent_instruction(from_lang: str, to_lang: str) -> str:
     # 1. Audio translation logic
     instruction += "### 1. SIMULTANEOUS INTERPRETER (For Audio Input):\n"
     if from_lang == "auto":
+        target_name = LANGUAGES.get(to_lang, "Japanese")
         instruction += (
-            "- You will receive spoken audio in either English or Japanese.\n"
-            "- If the spoken language is English, translate it to Japanese and speak the translation directly.\n"
-            "- If the spoken language is Japanese, translate it to English and speak the translation directly.\n"
-        )
-    elif from_lang == "en" and to_lang == "ja":
-        instruction += (
-            "- You will receive spoken audio in English.\n"
-            "- Translate the English speech into Japanese and speak the translation directly.\n"
-        )
-    elif from_lang == "ja" and to_lang == "en":
-        instruction += (
-            "- You will receive spoken audio in Japanese.\n"
-            "- Translate the Japanese speech into English and speak the translation directly.\n"
+            f"- You will receive spoken audio in various languages (English, Japanese, Hindi, Bengali, Marathi, Telugu, Tamil).\n"
+            f"- If the spoken language is different from {target_name}, translate it to {target_name} and speak the translation directly.\n"
+            f"- If the spoken language is {target_name}, translate it to English (or Japanese if the target language is English) and speak the translation directly.\n"
         )
     else:
-        # Default fallback
+        src_name = LANGUAGES.get(from_lang, "English")
+        tgt_name = LANGUAGES.get(to_lang, "Japanese")
         instruction += (
-            f"- You will receive spoken audio. Translate it into {to_lang.upper()} and speak the translation directly.\n"
+            f"- You will receive spoken audio in {src_name}.\n"
+            f"- Translate the {src_name} speech into {tgt_name} and speak the translation directly.\n"
         )
         
     instruction += (

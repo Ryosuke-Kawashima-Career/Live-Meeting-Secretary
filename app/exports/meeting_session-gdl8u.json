@@ -1,0 +1,44 @@
+{
+  "session_id": "session-gdl8u",
+  "user_id": "demo-user",
+  "from_lang": "auto",
+  "to_lang": "ja",
+  "timestamp": "2026-07-15T16:42:14.840869",
+  "transcript": [
+    {
+      "speaker": "user-audio",
+      "text": "Can you hear me?",
+      "timestamp": "2026-07-15T16:41:47.637147"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "聞こえますよ。どうされましたか?",
+      "timestamp": "2026-07-15T16:41:48.640786"
+    },
+    {
+      "speaker": "user-audio",
+      "text": "R",
+      "timestamp": "2026-07-15T16:41:54.818440"
+    },
+    {
+      "speaker": "user-audio",
+      "text": "に 翻訳 でき ます か ?",
+      "timestamp": "2026-07-15T16:41:56.392559"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "はい、タミル語に翻訳できますよ。どのように翻訳したいですか?",
+      "timestamp": "2026-07-15T16:41:58.573935"
+    },
+    {
+      "speaker": "user-audio",
+      "text": "じゃん 何か 話す タミル語 で 話し て み て ください 。",
+      "timestamp": "2026-07-15T16:42:05.917160"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "Vanakkam! Eppadi irukkeenga? (こんにちは!お元気ですか?)",
+      "timestamp": "2026-07-15T16:42:08.103260"
+    }
+  ]
+}
