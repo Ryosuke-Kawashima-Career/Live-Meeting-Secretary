@@ -1,0 +1,14 @@
+{
+  "session_id": "test-session-4793",
+  "user_id": "test-user",
+  "from_lang": "hi",
+  "to_lang": "en",
+  "timestamp": "2026-07-15T16:48:22.550056",
+  "transcript": [
+    {
+      "speaker": "user-chat",
+      "text": "football ke niyam kya hain?",
+      "timestamp": "2026-07-15T16:48:18.996375"
+    }
+  ]
+}

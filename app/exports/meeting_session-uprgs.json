@@ -1,0 +1,69 @@
+{
+  "session_id": "session-uprgs",
+  "user_id": "demo-user",
+  "from_lang": "auto",
+  "to_lang": "ja",
+  "timestamp": "2026-07-15T16:50:27.840863",
+  "transcript": [
+    {
+      "speaker": "user-audio",
+      "text": "Ah mas, a semente.",
+      "timestamp": "2026-07-15T16:49:34.402249"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "go straight",
+      "timestamp": "2026-07-15T16:49:35.690067"
+    },
+    {
+      "speaker": "user-audio",
+      "text": "こえ ます か 。",
+      "timestamp": "2026-07-15T16:49:38.267158"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "Will you remember?",
+      "timestamp": "2026-07-15T16:49:40.136736"
+    },
+    {
+      "speaker": "user-audio",
+      "text": "Oh, can you translate my Japanese to Hindi?",
+      "timestamp": "2026-07-15T16:49:47.762659"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "はい、設定を変更しました。これからは、日本語の発言をヒンディー語に翻訳します。どうぞ！",
+      "timestamp": "2026-07-15T16:49:51.095356"
+    },
+    {
+      "speaker": "user-audio",
+      "text": "私 は 川島 亮介 です 。",
+      "timestamp": "2026-07-15T16:49:58.983563"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "नमस्ते, मैं कावाशिमा रयोसुके हूँ।",
+      "timestamp": "2026-07-15T16:50:00.912506"
+    },
+    {
+      "speaker": "user-audio",
+      "text": "じゃ マラーティー これ を お 願い し ます 。",
+      "timestamp": "2026-07-15T16:50:07.167574"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "ठीक आहे, मी मराठीत भाषांतर करेन. बोला!",
+      "timestamp": "2026-07-15T16:50:09.095521"
+    },
+    {
+      "speaker": "user-audio",
+      "text": "Oh nice.",
+      "timestamp": "2026-07-15T16:50:14.575786"
+    },
+    {
+      "speaker": "agent-audio-translation",
+      "text": "छान आहे!",
+      "timestamp": "2026-07-15T16:50:15.300408"
+    }
+  ]
+}

@@ -123,7 +123,7 @@ async def websocket_endpoint(
                 # Handle text messages
                 if json_message.get("type") == "text":
                     user_text = json_message["text"]
-                    print(f"[UPSTREAM] Text query: {user_text}")
+                    print(f"[UPSTREAM] Text query: {repr(user_text)}")
                     
                     # Log chat query on the server side
                     transcript_log.append({
